@@ -1,1 +1,1 @@
-# funpay
+# Test tasks for Funpay
