@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Тест FunPay</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        .container p{
+            padding-top: 100px;
+            width: 100px;
+            margin: 0 auto;
+        }
+
+        img {
+            height: 20px;
+        }
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Тестовое задание</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Обработанные данные&nbsp<img class="preload" src="img/2.gif" /></h4>
+            </div>
+            <div id="modal-content-body" class="text-center" style="padding: 30px;">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <p>
+        <button id="myModal" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Открыть &raquo;</button>
+    </p>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myModal').on('click',function (e) {
+            $('#myModal').modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $('.preload').show();
+            $('#modal-content-body').empty();
+            setTimeout(function() {
+                $.get( "sms.php", { type: "yandex", data: $('#text-data').val() } )
+                        .done(function( data ) {
+                            $('#modal-content-body').html(data);
+                        })
+                        .always(function() {
+                            $('.preload').hide();
+                            $('#myModal').removeData('bs.modal');
+                        });
+            }, 1000);
+        });
+    });
+</script>
+
+</body>
+</html>
